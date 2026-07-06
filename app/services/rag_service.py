@@ -6,37 +6,24 @@ from app.rag.vectorstore import VectorStore
 
 
 class RAGService:
-
     def ask(self, question: str):
-
         retriever = Retriever()
-
         docs = retriever.search(question)
-
         context = "\n\n".join(
             doc.page_content
             for doc in docs
         )
-
         chain = RAGChain()
-
         return chain.run(
             question=question,
             context=context,
         )
-
     def ingest(self):
-
         loader = DocumentLoader()
-
         docs = loader.load_documents()
-
         splitter = DocumentSplitter()
-
         chunks = splitter.split_documents(docs)
-
         vector = VectorStore()
-
         vector.create(chunks)
 
         return {
